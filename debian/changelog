@@ -1,3 +1,9 @@
+libstrophe (0.8.7-1~14.04~ppa1) trusty; urgency=medium
+
+  * Build for trusty.
+
+ -- Chris Weyl <cweyl@alumni.drew.edu>  Thu, 22 Jan 2015 23:16:19 -0800
+
 libstrophe (0.8.7-1) unstable; urgency=medium
 
   * Imported Upstream version 0.8.7
