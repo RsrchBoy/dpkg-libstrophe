@@ -6,10 +6,7 @@
 **  This software is provided AS-IS with no warranty, either express
 **  or implied.
 **
-**  This software is distributed under license and may not be copied,
-**  modified or distributed except as expressly authorized under the
-**  terms of the license contained in the file LICENSE.txt in this
-**  distribution.
+**  This program is dual licensed under the MIT and GPLv3 licenses.
 */
 
 /** @file
@@ -38,7 +35,7 @@ void handler_fire_stanza(xmpp_conn_t * const conn,
 			 xmpp_stanza_t * const stanza)
 {
     xmpp_handlist_t *item, *prev;
-    char *id, *ns, *name, *type;
+    const char *id, *ns, *name, *type;
     
     /* call id handlers */
     id = xmpp_stanza_get_id(stanza);

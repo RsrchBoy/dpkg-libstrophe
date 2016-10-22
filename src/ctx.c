@@ -6,10 +6,7 @@
 **  This software is provided AS-IS with no warranty, either express 
 **  or implied.
 **
-**  This software is distributed under license and may not be copied,
-**  modified or distributed except as expressly authorized under the
-**  terms of the license contained in the file LICENSE.txt in this
-**  distribution.
+**  This program is dual licensed under the MIT and GPLv3 licenses.
 */
 
 /** @file
@@ -51,6 +48,11 @@
 #include "strophe.h"
 #include "common.h"
 #include "util.h"
+
+/* Workaround for visual studio without va_copy support. */
+#if defined(_MSC_VER) && _MSC_VER < 1800
+#define va_copy(d,s) ((d) = (s))
+#endif
 
 /** Initialize the Strophe library.
  *  This function initializes subcomponents of the Strophe library and must
@@ -148,7 +150,7 @@ static const xmpp_log_level_t _xmpp_default_logger_levels[] = {XMPP_LEVEL_DEBUG,
  *  @param area the area the log message is for
  *  @param msg the log message
  */
-void xmpp_default_logger(void * const userdata,
+static void xmpp_default_logger(void * const userdata,
 			 const xmpp_log_level_t level,
 			 const char * const area,
 			 const char * const msg)
@@ -407,6 +409,11 @@ xmpp_ctx_t *xmpp_ctx_new(const xmpp_mem_t * const mem,
 
 	ctx->connlist = NULL;
 	ctx->loop_status = XMPP_LOOP_NOTSTARTED;
+	ctx->rand = xmpp_rand_new(ctx);
+	if (ctx->rand == NULL) {
+	    xmpp_free(ctx, ctx);
+	    ctx = NULL;
+	}
     }
 
     return ctx;
@@ -421,6 +428,7 @@ xmpp_ctx_t *xmpp_ctx_new(const xmpp_mem_t * const mem,
 void xmpp_ctx_free(xmpp_ctx_t * const ctx)
 {
     /* mem and log are owned by their suppliers */
+    xmpp_rand_free(ctx, ctx->rand);
     xmpp_free(ctx, ctx); /* pull the hole in after us */
 }
 
