@@ -6,10 +6,7 @@
 **  This software is provided AS-IS with no warranty, either express
 **  or implied.
 **
-**  This software is distributed under license and may not be copied,
-**  modified or distributed except as expressly authorized under the
-**  terms of the license contained in the file LICENSE.txt in this
-**  distribution.
+**  This program is dual licensed under the MIT and GPLv3 licenses.
 */
 
 /** @file
@@ -128,10 +125,16 @@ tls_t *tls_new(xmpp_ctx_t *ctx, sock_t sock)
     memset(&scred, 0, sizeof(scred));
     scred.dwVersion = SCHANNEL_CRED_VERSION;
     /*scred.grbitEnabledProtocols = SP_PROT_TLS1_CLIENT;*/
+    /* Remote server closes connection with forced RC4.
+       The below lines are commented to leave default system configuration */
+#if 0
     /* Something down the line doesn't like AES, so force it to RC4 */
     algs[0] = CALG_RC4;
     scred.cSupportedAlgs = 1;
     scred.palgSupportedAlgs = algs;
+#else
+    (void)algs;
+#endif
 
     ret = tls->sft->AcquireCredentialsHandleA(NULL, UNISP_NAME,
 	SECPKG_CRED_OUTBOUND, NULL, &scred, NULL, NULL, &(tls->hcred), NULL);
@@ -357,6 +360,7 @@ int tls_start(tls_t *tls)
 
     if (ret != SEC_E_OK) {
 	tls->lasterror = ret;
+	xmpp_error(tls->ctx, "TLSS", "Schannel error 0x%lx", (unsigned long)ret);
 	return 0;
     }
 
@@ -566,7 +570,6 @@ int tls_write(tls_t *tls, const void * const buff, const size_t len)
 {
     SecBufferDesc sbdenc;
     SecBuffer sbenc[4];
-    unsigned char *sendbuffer;
     const unsigned char *p = buff;
     int sent = 0, ret, remain = len;
 

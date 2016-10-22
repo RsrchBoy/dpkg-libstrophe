@@ -6,10 +6,7 @@
 **  This software is provided AS-IS with no warranty, either express
 **  or implied.
 **
-**  This software is distributed under license and may not be copied,
-**  modified or distributed except as expressly authorized under the
-**  terms of the license contained in the file LICENSE.txt in this
-**  distribution.
+**  This program is dual licensed under the MIT and GPLv3 licenses.
 */
 
 #include <stdio.h>
@@ -97,6 +94,8 @@ int main(int argc, char **argv)
     if (!(log_called && mem_alloc_called && mem_realloc_called && 
 	  mem_free_called))
 	return 1;
+    if (mem_alloc_called != mem_free_called)
+        return 1;
     
     return 0;
 }

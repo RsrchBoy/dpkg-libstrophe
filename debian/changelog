@@ -1,3 +1,30 @@
+libstrophe (0.9.1-1) unstable; urgency=medium
+
+  * New upstream version 0.9.1
+  * Bump standards to 3.9.8, no changes needed
+  * Year 2016 added to d/copyright
+  * Changed maintainer's email to d.o
+  * s/libstrophe0.symbols updated with new symbols
+  * Enable bindnow hardening flags
+  * Fixed spelling in patch d/patches/fix_spelling.patch
+
+ -- Dariusz Dwornikowski <darek@debian.org>  Thu, 22 Sep 2016 18:30:16 +0200
+
+libstrophe (0.8.8-2) unstable; urgency=medium
+
+  * Added installation of pkg-config file
+
+ -- Dariusz Dwornikowski <dariusz.dwornikowski@cs.put.poznan.pl>  Thu, 10 Sep 2015 16:33:25 +0200
+
+libstrophe (0.8.8-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.8.8
+  * Cleaned-up licenses in d/copyright
+  * d/libstrophe0.symbols:
+    - added xmpp_connect_component@Base 0.8.8-1
+
+ -- Dariusz Dwornikowski <dariusz.dwornikowski@cs.put.poznan.pl>  Fri, 28 Aug 2015 22:30:43 +0200
+
 libstrophe (0.8.7-1) unstable; urgency=medium
 
   * Imported Upstream version 0.8.7
