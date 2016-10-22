@@ -1,3 +1,9 @@
+libstrophe (0.9.1-1~16.04~ppa1) xenial; urgency=medium
+
+  * Build for xenial.
+
+ -- Chris Weyl <cweyl@alumni.drew.edu>  Sat, 22 Oct 2016 00:46:51 -0500
+
 libstrophe (0.9.1-1) unstable; urgency=medium
 
   * New upstream version 0.9.1
